@@ -1,0 +1,86 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPageAdmin.master.cs" Inherits="Administrativo_MasterPageAdmin"  %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>ÁREA ADMINISTRATIVA</title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../styleadmin.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <div>
+    <div id="wrapper">
+	<div id="header">
+		<div id="logo">
+		<p>&nbsp;</p>
+		  <h1><asp:Label ID="Label1" runat="server"></asp:Label>
+		  </h1>
+            <p><asp:Label ID="Label2" runat="server"></asp:Label></p>
+            <p><samp><i><asp:Label ID="Label3" runat="server"></asp:Label></i></samp></p>
+            <p>&nbsp;</p>
+            <p><strong>ÁREA ADMINISTRATIVA</strong></p>
+            <a href="../Default.aspx" title="Clique par visualizar o site." target="_blank">Visualizar o Site</a>
+	    </div> 
+	</div>
+	<!-- end #header -->
+	<div id="menu">
+		<ul>
+			<li class=""><a href="/Administrativo/Default.aspx">Início</a></li>
+			<li><a href="/Administrativo/Paginas.aspx">Páginas</a></li>
+            <li><a href="/Administrativo/Cadastro.aspx">Cadastro</a></li>
+			<li><a href="/Administrativo/Links.aspx">Links</a></li>
+            <li><a href="/Administrativo/Noticias.aspx">Notícias</a></li>
+            <li><a href="/Administrativo/Municipios.aspx">Cidades</a></li>
+            <li><a href="/Administrativo/Filiados.aspx">Filiados</a></li>
+            <li><a href="/Administrativo/Albuns.aspx">Álbuns</a></li>
+			<li><a href="/Administrativo/Usuarios/Default.aspx">Usuários</a></li>
+			<li><asp:LoginStatus ID="LoginStatus1" runat="server" LogoutText="Sair" /></a></li>
+		</ul>
+	</div>
+	<!-- end #menu -->
+	<div id="page"> 
+		<div id="content">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+        </div>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #content -->	
+	</div>
+	<!-- end #page -->
+   <div id="footer-content">
+	<div class="column">
+
+    <strong>Acesso Rápido</strong>
+
+    <center>
+    <asp:DataList ID="DataListPaginas" runat="server" DataSourceID="DsPaginas" RepeatDirection="Horizontal"  EnableViewState="False" CellSpacing="10" RepeatColumns="10" >
+    <ItemTemplate>
+       <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%# Eval("pag_cod", "CadPaginas.aspx?codpagina={0}") %>' Text='<% # "<br />" + Eval("pag_nome") %>'></asp:HyperLink>
+    </ItemTemplate>
+    </asp:DataList>
+
+    <asp:ObjectDataSource ID="DsPaginas" runat="server" SelectMethod="SelecionaPaginasDs" TypeName="Rwd.BLL.BusinessLogic" OldValuesParameterFormatString="original_{0}">
+    <SelectParameters>
+    <asp:Parameter DefaultValue="" Name="pag_cod" Type="Int32" />
+    <asp:Parameter DefaultValue="%" Name="pag_nome" Type="String" />
+    <asp:Parameter DefaultValue="%" Name="pag_menu" Type="String" />
+    </SelectParameters>
+    </asp:ObjectDataSource>      
+    </center>      
+
+    </div>
+   </div>
+   <div id="footer">
+	<p align='center'>Copyright © <%= DateTime.Now.Year %> - Desenvolvido por: <a href='<%= ConfigurationManager.AppSettings["AdminSite"].ToString() %>' title='RAMOS Web Designer - Criação de Sites' target='_blank'>RAMOS Web Designer</a></p>
+   </div>
+     <!-- end #footer -->
+    </div>
+    </form>
+</body>
+</html>

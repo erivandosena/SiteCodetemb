@@ -1,0 +1,96 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>CODETEMB - Colegiado de Desenvolvimento Territorial do Maciço de Baturité</title>
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="RAMOS Web Designer" />
+    <meta name="google-site-verification" content="DbCAszjB_0nCLxbr-rv3IEePDIw5atszj0VWIKraxyQ" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server" />
+    <div id="wrapper">
+    <div id="header">
+    <div id="logo">
+     <h1><asp:Label ID="LabelTituloSite" runat="server"></asp:Label></h1>
+	</div>
+    <div id="flash">
+    <div id="imagem">
+    <!-- L 176 x A 165 -->
+    <img src="images/logo.jpg" border="0" /> 
+    <!-- <asp:Image ID="ImageLogo" runat="server" /> -->
+    </div>
+    <!-- Flash pode ser aqui -->
+    </div>
+	</div>
+	<!-- end #header -->
+	<div id="menu">
+        <ul> <!-- current_page_item -->
+            <li class=""><a href="Default.aspx" title="Home">Home</a></li>
+            <li>
+                <asp:DataList ID="DataList1" runat="server" DataSourceID="DsLinksTopo" RepeatDirection="Horizontal" ShowFooter="False" ShowHeader="False">
+                <ItemTemplate>
+                    <li><a href="<%# Eval("pag_cod", "Conteudo.aspx?pag={0}") %>" title="<%# Eval("pag_nome") %>" style="text-decoration: none"><%# Eval("pag_nome")%></a></li>
+                </ItemTemplate>
+                </asp:DataList>
+            </li>
+            <li><a href="Fotos.aspx" title="Fotos">Fotos</a></li>	
+            <li><a href="Contato.aspx" title="Contato">Contato</a></li>	
+        </ul>
+    </div>
+        <asp:ObjectDataSource ID="DsLinksTopo" runat="server" SelectMethod="SelecionaPaginasDs" TypeName="Rwd.BLL.BusinessLogic" OldValuesParameterFormatString="original_{0}">
+        <SelectParameters>
+        <asp:Parameter DefaultValue="0" Name="pag_cod" Type="Int32" />
+        <asp:Parameter DefaultValue="%" Name="pag_nome" Type="String" />
+        <asp:Parameter DefaultValue="TOPO" Name="pag_menu" Type="String" />
+        </SelectParameters>
+        </asp:ObjectDataSource>  
+	<!-- end #menu -->
+	<div id="page"> 
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+	<!-- end #page --> 
+    <div id="footer-content">
+	<div class="column1">
+        <asp:Label ID="LabelBase" runat="server"></asp:Label>
+	</div>
+	<div class="column2">
+        <ul>
+            <asp:DataList ID="DataList2" runat="server" DataSourceID="DsLinksRodape" 
+                ShowFooter="False" ShowHeader="False" RepeatColumns="6" RepeatLayout="Flow" 
+                RepeatDirection="Horizontal" Font-Size="11pt" >
+            <ItemTemplate>
+                <li>
+                <a href="<%# Eval("pag_cod", "Conteudo.aspx?pag={0}") %>" title="<%# Eval("pag_nome") %>"><strong><%# Eval("pag_descricao")%></strong></a>
+                </li>
+            </ItemTemplate>
+            </asp:DataList>
+        </ul>
+        <asp:ObjectDataSource ID="DsLinksRodape" runat="server" SelectMethod="SelecionaPaginasDs" TypeName="Rwd.BLL.BusinessLogic" OldValuesParameterFormatString="original_{0}">
+    <SelectParameters>
+    <asp:Parameter DefaultValue="0" Name="pag_cod" Type="Int32" />
+    <asp:Parameter DefaultValue="%" Name="pag_nome" Type="String" />
+    <asp:Parameter DefaultValue="BASE" Name="pag_menu" Type="String" />
+    </SelectParameters>
+    </asp:ObjectDataSource>
+	</div>
+    </div>
+    <div id="footer">
+	<p> Copyright © <asp:Label ID="LabelCopyright" runat="server"></asp:Label>
+    &nbsp;
+    Desenvolvido por: <a href="http://www.rwd.net.br" title="Criação de Sites" target="_blank">RAMOS Web Designer</a></p>
+    </div>
+    <!-- end #footer -->  
+    </div>   
+    </form>
+</body>
+</html>
